@@ -1,0 +1,160 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0">
+          <div class="card-body p-4">
+            <h3 class="text-center mb-4">Create an Account</h3>
+            
+            <form [formGroup]="myForm">
+              
+              <!-- Error Alert -->
+              <div class="alert alert-danger" *ngIf="err">
+                <strong>{{err}}</strong>
+              </div>            
+  
+              <!-- Username Input -->
+              <div class="form-group mb-3">
+                <label for="username">Nom Utilisateur:</label>
+                <input
+                  type="text"
+                  id="username"
+                  class="form-control"
+                  formControlName="username"
+                  [(ngModel)]="user.username"
+                  placeholder="Enter your username"
+                />
+                <span
+                  *ngIf="
+                    myForm.controls['username'].hasError('required') &&
+                    myForm.controls['username'].touched
+                  "
+                  class="text-danger small"
+                >
+                  Nom Utilisateur est obligatoire
+                </span>
+              </div>
+  
+              <!-- Email Input -->
+              <div class="form-group mb-3">
+                <label for="email">Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  formControlName="email"
+                  [(ngModel)]="user.email"
+                  placeholder="Enter your email"
+                />
+                <span
+                  *ngIf="
+                    myForm.controls['email'].hasError('required') &&
+                    myForm.controls['email'].touched
+                  "
+                  class="text-danger small"
+                >
+                  Email est obligatoire
+                </span>
+                <span
+                  *ngIf="
+                    myForm.controls['email'].hasError('email') &&
+                    myForm.controls['email'].touched
+                  "
+                  class="text-danger small"
+                >
+                  Email non valide
+                </span>
+              </div>
+  
+              <!-- Password Input -->
+              <div class="form-group mb-3">
+                <label for="password">Mot de Passe:</label>
+                <input
+                  type="password"
+                  id="password"
+                  class="form-control"
+                  formControlName="password"
+                  [(ngModel)]="user.password"
+                  placeholder="Enter your password"
+                />
+                <span
+                  *ngIf="
+                    myForm.controls['password'].hasError('required') &&
+                    myForm.controls['password'].touched
+                  "
+                  class="text-danger small"
+                >
+                  Mot de passe est obligatoire
+                </span>
+                <span
+                  *ngIf="
+                    myForm.controls['password'].hasError('minlength') &&
+                    myForm.controls['password'].touched
+                  "
+                  class="text-danger small"
+                >
+                  Mot de passe doit contenir au moins 6 caractères
+                </span>
+              </div>
+  
+              <!-- Confirm Password Input -->
+              <div class="form-group mb-3">
+                <label for="confirmPassword">Confirmer Mot de Passe:</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  class="form-control"
+                  formControlName="confirmPassword"
+                  placeholder="Confirm your password"
+                />
+                <span
+                  *ngIf="
+                    myForm.controls['confirmPassword'].hasError('required') &&
+                    myForm.controls['confirmPassword'].touched
+                  "
+                  class="text-danger small"
+                >
+                  Confirmer mot de passe est obligatoire
+                </span>
+                <span
+                  *ngIf="
+                    myForm.get('confirmPassword')?.touched &&
+                    myForm.get('confirmPassword')?.value !=
+                    myForm.get('password')?.value
+                  "
+                  class="text-danger small"
+                >
+                  Le mot de passe confirmé ne correspond pas
+                </span>
+              </div>
+
+              <div *ngIf="loading==true" class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+                </div>
+                </div>
+  
+              <!-- Register Button -->
+              <div class="d-grid gap-2">
+                <button
+                  type="button"
+                  [disabled]="myForm.invalid"
+                  class="btn btn-primary btn-block"
+                  (click)="onRegister()"
+                >
+                  S'inscrire
+                </button>
+              </div>
+              
+              <!-- Link to Login -->
+              <div class="text-center mt-3">
+                <p>Vous avez déjà un compte? 
+                  <a routerLink="/Login">Se connecter</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

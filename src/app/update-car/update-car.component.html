@@ -1,0 +1,67 @@
+<div class="form-group">
+  <label for="carModel">Car Model</label>
+  <input
+    type="text"
+    id="carModel"
+    [(ngModel)]="newCar.carModel"
+    class="form-control"
+  />
+</div>
+<div class="form-group">
+  <label for="carBrand">Car Brand</label>
+  <input
+    type="text"
+    id="carBrand"
+    [(ngModel)]="newCar.carBrand"
+    class="form-control"
+  />
+</div>
+<div class="form-group">
+  <label for="price">Price</label>
+  <input
+    type="number"
+    id="price"
+    [(ngModel)]="newCar.price"
+    class="form-control"
+  />
+</div>
+<div class="col-sm-16 col-md-16 col-lg-16">
+  <label class="mb-2">Images :</label>
+    <table class="table table-striped">
+      <tbody *ngFor="let img of newCar.images">
+        <tr>
+          <td>
+            <img
+              alt="img"
+              class="card-img-top img-responsive"
+              src="{{ 'data:' + img.type + ';base64,' + img.image }}"
+              style="height: 50px; width: 100px"
+            />
+          </td>
+          <td style="width: 20%">
+            <a class="btn btn-danger" (click)="supprimerImage(img)"
+              >Supprimer</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <input type="file" (change)="onImageUpload($event)" class="form-control" />
+</div>
+<div class="form-group">
+  <label for="familyGroup">Family Group</label>
+  <select
+    id="familyGroup"
+    [(ngModel)]="newCar.familyGroup.id"
+    class="form-control"
+  >
+    <option *ngFor="let fg of FGs" [value]="fg.id">{{ fg.group_Name }}</option>
+  </select>
+</div>
+<button type="button" (click)="UpdateCar()" class="btn btn-primary">
+  Update Car
+</button>
+&nbsp;
+<button type="submit" (click)="onAddImageCar()" class="btn btn-success">
+  Ajouter Image
+</button>

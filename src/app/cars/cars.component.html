@@ -1,0 +1,100 @@
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="form-group">
+      <label for="searchBy">Search By:</label>
+      <select
+        id="searchBy"
+        class="form-control"
+        [(ngModel)]="searchBy"
+        (change)="resetSearch()"
+      >
+        <option value="model">Model</option>
+        <option value="category">Family Group</option>
+      </select>
+    </div>
+    <div [ngSwitch]="searchBy">
+      <div *ngSwitchCase="'model'">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchTerm"
+          placeholder="Enter model"
+          (keyup)="search()"
+        />
+      </div>
+      <div *ngSwitchCase="'category'">
+        <select class="form-control" [(ngModel)]="searchFG">
+          <option *ngFor="let fg of FGs" [value]="fg.id">
+            {{ fg.group_Name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <button
+      class="btn btn-primary mt-2"
+      (click)="search()"
+      *ngIf="searchBy != 'model'"
+    >
+      Search
+    </button>
+    <button
+      type="submit"
+      *ngIf="searchBy == 'model'"
+      class="btn btn-primary mt-2"
+      (click)="resetSearch()"
+    >
+      Reset
+    </button>
+
+    <table class="table table-striped mt-4">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Car Model</th>
+          <th>Car Brand</th>
+          <th>Price</th>
+          <th>Image</th>
+          <th>Family</th>
+          <th *ngIf="Admin">Manage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let car of cars">
+          <td>{{ car.carID }}</td>
+          <td>{{ car.carModel }}</td>
+          <td>{{ car.carBrand }}</td>
+          <td>{{ car.price }}</td>
+          <td>
+            <p *ngIf="car.imagePath==null">No Image Found !</p>
+            <img
+            alt="img"
+            class="card-img-top img-responsive"
+            *ngIf="car.imagePath!=null"
+            [src]="'http://127.0.0.1:8080/Cars/api/image/loadfromFS/' + car.carID"
+            style="height: 50px; width: 100px"
+          />
+          
+          </td>
+          <td>{{ car.familyGroup.group_Name }}</td>
+          <td *ngIf="Admin">
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="deleteCar(car.carID)"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+            &nbsp;
+            <button
+              type="button"
+              class="btn btn-warning"
+              (click)="redirect(car.carID)"
+            >
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

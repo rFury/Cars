@@ -1,0 +1,32 @@
+<div class="card shadow mb-4">
+  <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+    <app-update-fg
+      *ngIf="Admin"
+      [FamilyGroupUpdated]="FamilyGroupUpdated"
+      [ajout]="ajout"
+      (FgUpdated)="FgUpdated($event)">
+    </app-update-fg>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Group Name</th>
+          <th>Date of Creation</th>
+          <th *ngIf="Admin">Manage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of FGs">
+          <td>{{ cat.group_Name }}</td>
+          <td>{{ cat.dateOfCreation }}</td>
+          <td *ngIf="Admin">
+            <button type="button" class="btn btn-warning" (click)="updateFG(cat)" >
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
